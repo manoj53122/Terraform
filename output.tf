@@ -3,5 +3,5 @@ output "id" {
 }
 
 output "IGW" {
-  value = aws.aws_internet_gateway
+  value = aws_internet_gateway.public_internet_gateway.id
 }
