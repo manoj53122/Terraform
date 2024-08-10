@@ -6,15 +6,26 @@
 
 # }
 
+# resource "aws_vpc_endpoint" "ssm" {
+#   vpc_id             = aws_vpc.main.id
+#   service_name       = "com.amazonaws.us-east-1.ssm"
+#   vpc_endpoint_type  = "Interface" # This is important
+#   subnet_ids         = aws_subnet.private_subnets[*].id
+
+#   security_group_ids = ["aws_security_group.ec2_sg"] # Optional, depending on your requirements
+#   private_dns_enabled = true
+# }
+
 resource "aws_vpc_endpoint" "ssm" {
   vpc_id             = aws_vpc.main.id
   service_name       = "com.amazonaws.us-east-1.ssm"
-  vpc_endpoint_type  = "Interface" # This is important
+  vpc_endpoint_type  = "Interface"
   subnet_ids         = aws_subnet.private_subnets[*].id
 
-  security_group_ids = ["aws_security_group.ec2_sg"] # Optional, depending on your requirements
+  security_group_ids = [aws_security_group.ec2_sg.id]  # Reference the security group ID
   private_dns_enabled = true
 }
+
 
 
 # resource "aws_vpc_endpoint" "ec2messages" {
