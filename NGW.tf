@@ -11,3 +11,7 @@ resource "aws_nat_gateway" "nat_gateway" {
     "Name" = "Private NAT GW: us-east-1 "
   }
 }
+
+output "private_subnet" {
+  value = aws_subnet.private_subnets.id
+}
