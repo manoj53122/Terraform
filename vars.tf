@@ -14,5 +14,5 @@ variable "cidr_private_subnet" {
 
 variable "us-east_availability_zone" {
  description = "Availability Zones"
- default     = ["us-east-1", "us-east-2"]
+ default     = ["us-east-1a", "us-east-1b"]
 }
