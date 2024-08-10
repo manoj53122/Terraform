@@ -7,11 +7,6 @@ provider "aws" {
 }
 
 # Create a VPC
-provider "aws" {
-  region = "us-east-1" # Choose your desired region
-}
-
-# Create a VPC
 resource "aws_vpc" "main" {
   cidr_block = "10.10.10.0/24"
 }
