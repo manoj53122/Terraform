@@ -4,12 +4,12 @@ variable "vpc_cidr" {
 
 variable "cidr_public_subnet" {
   description = "Public Subnet CIDR"
-  default     = ["10.0.1.0/25", "10.0.2.0/25"]
+  default     = ["10.0.1.0/26", "10.0.2.0/26"]
 }
 
 variable "cidr_private_subnet" {
   description = "Private Subnet CIDR"
-  default     = ["10.0.3.0/25", "10.0.4.0/25"]
+  default     = ["10.0.3.0/26", "10.0.4.0/26"]
 }
 
 variable "us-east_availability_zone" {
