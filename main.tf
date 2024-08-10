@@ -8,16 +8,17 @@ resource "aws_vpc" "main" {
 }
 
 # Create public subnets
+# Create public subnets
 resource "aws_subnet" "public_1" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.10.10.0/25"
+  cidr_block = "10.10.10.0/26"
   map_public_ip_on_launch = true
   availability_zone = "us-east-1a"
 }
 
 resource "aws_subnet" "public_2" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.10.10.128/25"
+  cidr_block = "10.10.10.64/26"
   map_public_ip_on_launch = true
   availability_zone = "us-east-1b"
 }
@@ -25,13 +26,13 @@ resource "aws_subnet" "public_2" {
 # Create private subnets
 resource "aws_subnet" "private_1" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.10.10.64/26"
+  cidr_block = "10.10.10.128/28"
   availability_zone = "us-east-1a"
 }
 
 resource "aws_subnet" "private_2" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.10.10.192/26"
+  cidr_block = "10.10.10.144/28"
   availability_zone = "us-east-1b"
 }
 
