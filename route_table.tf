@@ -9,7 +9,7 @@ resource "aws_route_table" "public_route_table" {
   }
 }
 
-resource "aws_route_table" "jhooq_private_route_table" {
+resource "aws_route_table" "private_route_table" {
   count      = length(var.cidr_private_subnet)
   vpc_id = aws_vpc.main.id
   depends_on = [aws_nat_gateway.nat_gateway]
