@@ -12,7 +12,7 @@ resource "aws_vpc_endpoint" "ssm" {
   vpc_endpoint_type  = "Interface" # This is important
   subnet_ids         = aws_subnet.private_subnets[*].id
 
-  security_group_ids = [aws_security_group.some_sg.id] # Optional, depending on your requirements
+  security_group_ids = [aws_security_group.ec2_sg] # Optional, depending on your requirements
   private_dns_enabled = true
 }
 
