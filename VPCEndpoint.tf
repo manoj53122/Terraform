@@ -2,7 +2,7 @@ resource "aws_vpc_endpoint" "ssm" {
   count      = length(var.cidr_private_subnet)
   vpc_id = aws_vpc.main.id
   service_name = "com.amazonaws.us-east-1.ssm"
-  subnet_ids   = length("aws_subnet.private_subnets")
+  subnet_ids   = length["aws_subnet.private_subnets"]
 }
 
 # resource "aws_vpc_endpoint" "ec2messages" {
