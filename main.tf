@@ -8,7 +8,7 @@ resource "aws_vpc" "main" {
 }
 resource "aws_subnet" "public_subnets" {
   count      = length(var.cidr_public_subnet)
-  vpc_id     = var.vpc_cidr
+  vpc_id     = aws_vpc.main.id
   cidr_block = element(var.cidr_public_subnet, count.index)
   availability_zone = element(var.us-east_availability_zone, count.index)
 
