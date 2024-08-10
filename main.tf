@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1" # Choose your desired region
+  region = "us-east-1"
 }
 
 # Create a VPC
@@ -7,7 +7,6 @@ resource "aws_vpc" "main" {
   cidr_block = "10.10.10.0/24"
 }
 
-# Create public subnets
 # Create public subnets
 resource "aws_subnet" "public_1" {
   vpc_id     = aws_vpc.main.id
@@ -26,13 +25,13 @@ resource "aws_subnet" "public_2" {
 # Create private subnets
 resource "aws_subnet" "private_1" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.10.10.128/28"
+  cidr_block = "10.10.10.128/27"
   availability_zone = "us-east-1a"
 }
 
 resource "aws_subnet" "private_2" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.10.10.144/28"
+  cidr_block = "10.10.10.160/27"
   availability_zone = "us-east-1b"
 }
 
