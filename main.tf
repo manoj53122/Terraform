@@ -151,8 +151,8 @@ resource "aws_security_group" "alb_sg" {
   }
 }
 
-# # Create VPC endpoints for SSM
-# # Create VPC endpoints for SSM (Interface endpoints)
+# Create VPC endpoints for SSM
+# Create VPC endpoints for SSM (Interface endpoints)
 # resource "aws_vpc_endpoint" "ssm" {
 #   vpc_id            = aws_vpc.main.id
 #   service_name      = "com.amazonaws.us-east-1.ssm"
@@ -181,7 +181,7 @@ resource "aws_security_group" "alb_sg" {
 #   security_group_ids = [aws_security_group.ec2_sg.id]
 
 #   private_dns_enabled = true
-}
+# }
 
 
 # # Create a private EC2 instance
