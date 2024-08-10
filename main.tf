@@ -7,6 +7,11 @@ provider "aws" {
 }
 
 # Create a VPC
+provider "aws" {
+  region = "us-east-1" # Choose your desired region
+}
+
+# Create a VPC
 resource "aws_vpc" "main" {
   cidr_block = "10.10.10.0/24"
 }
@@ -14,14 +19,14 @@ resource "aws_vpc" "main" {
 # Create public subnets
 resource "aws_subnet" "public_1" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.10.10.0/25"
+  cidr_block = "10.10.10.0/26"
   map_public_ip_on_launch = true
   availability_zone = "us-east-1a"
 }
 
 resource "aws_subnet" "public_2" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.10.10.128/25"
+  cidr_block = "10.10.10.64/26"
   map_public_ip_on_launch = true
   availability_zone = "us-east-1b"
 }
@@ -29,7 +34,7 @@ resource "aws_subnet" "public_2" {
 # Create private subnets
 resource "aws_subnet" "private_1" {
   vpc_id     = aws_vpc.main.id
-  cidr_block = "10.10.10.64/26"
+  cidr_block = "10.10.10.128/26"
   availability_zone = "us-east-1a"
 }
 
@@ -39,6 +44,9 @@ resource "aws_subnet" "private_2" {
   availability_zone = "us-east-1b"
 }
 
+# The rest of your configuration remains the same
+
+
 # Create an Internet Gateway
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
@@ -46,7 +54,6 @@ resource "aws_internet_gateway" "igw" {
 
 # Create an Elastic IP for the NAT Gateway
 resource "aws_eip" "nat" {
-  vpc = true
 }
 
 # Create a NAT Gateway
