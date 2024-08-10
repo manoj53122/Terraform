@@ -4,7 +4,7 @@ variable "vpc_cidr" {
 
 variable "cidr_public_subnet" {
   description = "Public Subnet CIDR"
-  default     = ["10.0.0.0/26", "10.0.0.1/26"]
+  default     = ["10.0.0.0/25", "10.0.0.1/25"]
 }
 
 variable "cidr_private_subnet" {
