@@ -1,21 +1,41 @@
-# resource "aws_subnet" "public_subnets" {
-#   count      = length(var.cidr_public_subnet)
-#   vpc_id     = aws_vpc.main.id
-#   cidr_block = element(var.cidr_public_subnet, count.index)
-#   availability_zone = element(var.us-east_availability_zone, count.index)
+resource "aws_subnet" "public_1" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.10.10.0/26"
+  map_public_ip_on_launch = true
+  availability_zone = "us-east-1a"
 
-#   tags = {
-#     Name = "Subnet-Public : Public Subnet_${count.index + 1}"
-#   }
-# }
+  tags = {
+    Name = "Demo_Public Subnet1}"
+  }
+}
 
-# resource "aws_subnet" "private_subnets" {
-#   count      = length(var.cidr_private_subnet)
-#   vpc_id     = aws_vpc.main.id
-#   cidr_block = element(var.cidr_private_subnet, count.index)
-#   availability_zone = element(var.us-east_availability_zone, count.index)
+resource "aws_subnet" "public_2" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.10.10.64/26"
+  map_public_ip_on_launch = true
+  availability_zone = "us-east-1b"
+  tags = {
+    Name = "Demo_Public Subnet2"
+  }
+}
 
-#   tags = {
-#     Name = "Subnet-Private : Private Subnet_${count.index + 1}"
-#   }
-# }
+resource "aws_subnet" "private_1" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.10.10.128/27"
+  availability_zone = "us-east-1a"
+
+  tags = {
+    Name = "Demo_Private Subnet1"
+  }
+}
+
+resource "aws_subnet" "private_2" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.10.10.160/27"
+  availability_zone = "us-east-1b"
+
+  tags = {
+    Name = "Demo_Private Subnet2"
+  
+}
+}
