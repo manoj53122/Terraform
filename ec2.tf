@@ -215,7 +215,7 @@ resource "aws_lb_listener" "http" {
 }
 
 resource "aws_instance" "private_ec2" {
-  ami           = "ami-0a1b2c3d4e5f67890"  # Example AMI ID for Ubuntu 22.04 LTS in `us-west-2`
+  ami           = "ami-0aff18ec83b712f05"  # Example AMI ID for Ubuntu 22.04 LTS in `us-west-2`
   instance_type = "t2.micro"
   subnet_id     = aws_subnet.private_subnet1.id
   associate_public_ip_address = false
