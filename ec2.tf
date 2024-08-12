@@ -177,23 +177,6 @@ resource "aws_vpc_endpoint" "ssm_messages" {
   subnet_ids          = [aws_subnet.private_subnet1.id, aws_subnet.private_subnet2.id]
 }
 
-# Launch a private EC2 instance
-resource "aws_vpc_endpoint" "ssm" {
-  vpc_id             = aws_vpc.main.id
-  service_name        = "com.amazonaws.${var.region}.ssm"
-  vpc_endpoint_type   = "Interface"
-  security_group_ids  = [aws_security_group.ec2_sg.id]
-  subnet_ids          = [aws_subnet.private_subnet1.id, aws_subnet.private_subnet2.id]
-}
-
-resource "aws_vpc_endpoint" "ssm_messages" {
-  vpc_id             = aws_vpc.main.id
-  service_name        = "com.amazonaws.${var.region}.ssmmessages"
-  vpc_endpoint_type   = "Interface"
-  security_group_ids  = [aws_security_group.ec2_sg.id]
-  subnet_ids          = [aws_subnet.private_subnet1.id, aws_subnet.private_subnet2.id]
-}
-
 # Create an Application Load Balancer
 resource "aws_lb" "app_lb" {
   name               = "app-load-balancer"
