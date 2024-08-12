@@ -231,4 +231,15 @@ resource "aws_instance" "private_ec2" {
               EOF
 }
 
+resource "aws_instance" "private_ec2" {
+  ami           = "ami-0aff18ec83b712f05"  # Example AMI ID for Ubuntu 22.04 LTS in `us-west-2`
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.public_subnet1.id
+  associate_public_ip_address = true
+
+  tags = {
+    Name = "private-ec2-instance"
+  }
+}
+
 
