@@ -11,7 +11,7 @@ resource "aws_vpc" "main" {
 
 resource "aws_subnet" "public_subnet1" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.10.10.0/25"
+  cidr_block        = "10.10.10.0/26"  # Adjusted CIDR block
   availability_zone = "us-west-2a"
   map_public_ip_on_launch = true
   tags = {
@@ -21,7 +21,7 @@ resource "aws_subnet" "public_subnet1" {
 
 resource "aws_subnet" "public_subnet2" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.10.10.128/25"
+  cidr_block        = "10.10.10.64/26"  # Adjusted CIDR block
   availability_zone = "us-west-2b"
   map_public_ip_on_launch = true
   tags = {
@@ -31,7 +31,7 @@ resource "aws_subnet" "public_subnet2" {
 
 resource "aws_subnet" "private_subnet1" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.10.10.32/27"
+  cidr_block        = "10.10.10.128/26"  # Adjusted CIDR block
   availability_zone = "us-west-2a"
   tags = {
     Name = "private-subnet-1"
@@ -40,7 +40,7 @@ resource "aws_subnet" "private_subnet1" {
 
 resource "aws_subnet" "private_subnet2" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.10.10.64/27"
+  cidr_block        = "10.10.10.192/26"  # Adjusted CIDR block
   availability_zone = "us-west-2b"
   tags = {
     Name = "private-subnet-2"
@@ -163,7 +163,7 @@ resource "aws_security_group" "alb_sg" {
 # Create VPC endpoints for SSM
 resource "aws_vpc_endpoint" "ssm" {
   vpc_id             = aws_vpc.main.id
-  service_name        = "com.amazonaws.us-east-1.ssm"
+  service_name        = "com.amazonaws.${var.region}.ssm"
   vpc_endpoint_type   = "Interface"
   security_group_ids  = [aws_security_group.ec2_sg.id]
   subnet_ids          = [aws_subnet.private_subnet1.id, aws_subnet.private_subnet2.id]
@@ -171,28 +171,27 @@ resource "aws_vpc_endpoint" "ssm" {
 
 resource "aws_vpc_endpoint" "ssm_messages" {
   vpc_id             = aws_vpc.main.id
-  service_name        = "com.amazonaws.us-east-1.ssmmessages"
+  service_name        = "com.amazonaws.${var.region}.ssmmessages"
   vpc_endpoint_type   = "Interface"
   security_group_ids  = [aws_security_group.ec2_sg.id]
   subnet_ids          = [aws_subnet.private_subnet1.id, aws_subnet.private_subnet2.id]
 }
 
 # Launch a private EC2 instance
-resource "aws_instance" "private_ec2" {
-  ami           = "ami-04a81a99f5ec58529"  # Example AMI, adjust as necessary
-  instance_type = "t2.micro"
-  subnet_id     = aws_subnet.private_subnet1.id
-  associate_public_ip_address = false
+resource "aws_vpc_endpoint" "ssm" {
+  vpc_id             = aws_vpc.main.id
+  service_name        = "com.amazonaws.${var.region}.ssm"
+  vpc_endpoint_type   = "Interface"
+  security_group_ids  = [aws_security_group.ec2_sg.id]
+  subnet_ids          = [aws_subnet.private_subnet1.id, aws_subnet.private_subnet2.id]
+}
 
-  tags = {
-    Name = "private-ec2-instance"
-  }
-
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo yum update -y
-              sudo yum install -y python3 java-1.8.0-openjdk
-              EOF
+resource "aws_vpc_endpoint" "ssm_messages" {
+  vpc_id             = aws_vpc.main.id
+  service_name        = "com.amazonaws.${var.region}.ssmmessages"
+  vpc_endpoint_type   = "Interface"
+  security_group_ids  = [aws_security_group.ec2_sg.id]
+  subnet_ids          = [aws_subnet.private_subnet1.id, aws_subnet.private_subnet2.id]
 }
 
 # Create an Application Load Balancer
