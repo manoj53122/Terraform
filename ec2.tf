@@ -1,7 +1,8 @@
 provider "aws" {
-  region = "us-west-2"
+  region = "us-west-2"  # Replace with your desired region
 }
 
+# Create a VPC
 resource "aws_vpc" "main" {
   cidr_block = "10.10.10.0/24"
   tags = {
@@ -9,9 +10,10 @@ resource "aws_vpc" "main" {
   }
 }
 
+# Create public subnets
 resource "aws_subnet" "public_subnet1" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.10.10.0/26"  # Adjusted CIDR block
+  cidr_block        = "10.10.10.0/27"  # Adjusted CIDR block
   availability_zone = "us-west-2a"
   map_public_ip_on_launch = true
   tags = {
@@ -21,7 +23,7 @@ resource "aws_subnet" "public_subnet1" {
 
 resource "aws_subnet" "public_subnet2" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.10.10.64/26"  # Adjusted CIDR block
+  cidr_block        = "10.10.10.32/27"  # Adjusted CIDR block
   availability_zone = "us-west-2b"
   map_public_ip_on_launch = true
   tags = {
@@ -29,9 +31,10 @@ resource "aws_subnet" "public_subnet2" {
   }
 }
 
+# Create private subnets
 resource "aws_subnet" "private_subnet1" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.10.10.128/26"  # Adjusted CIDR block
+  cidr_block        = "10.10.10.64/27"  # Adjusted CIDR block
   availability_zone = "us-west-2a"
   tags = {
     Name = "private-subnet-1"
@@ -40,12 +43,13 @@ resource "aws_subnet" "private_subnet1" {
 
 resource "aws_subnet" "private_subnet2" {
   vpc_id            = aws_vpc.main.id
-  cidr_block        = "10.10.10.192/26"  # Adjusted CIDR block
+  cidr_block        = "10.10.10.96/27"  # Adjusted CIDR block
   availability_zone = "us-west-2b"
   tags = {
     Name = "private-subnet-2"
   }
 }
+
 
 
 # Create an Internet Gateway
