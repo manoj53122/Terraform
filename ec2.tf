@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-west-2"  # Adjust region as necessary
+  region = "us-east-1"  # Adjust region as necessary
 }
 
 # Create a VPC
@@ -14,7 +14,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public_subnet1" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.10.10.0/25"
-  availability_zone = "us-west-2a"  # Adjust availability zone as necessary
+  availability_zone = "us-east-1a"  # Adjust availability zone as necessary
   map_public_ip_on_launch = true
   tags = {
     Name = "public-subnet-1"
@@ -24,7 +24,7 @@ resource "aws_subnet" "public_subnet1" {
 resource "aws_subnet" "public_subnet2" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.10.10.128/25"
-  availability_zone = "us-west-2b"  # Adjust availability zone as necessary
+  availability_zone = "us-east-1b"  # Adjust availability zone as necessary
   map_public_ip_on_launch = true
   tags = {
     Name = "public-subnet-2"
@@ -35,7 +35,7 @@ resource "aws_subnet" "public_subnet2" {
 resource "aws_subnet" "private_subnet1" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.10.10.32/27"
-  availability_zone = "us-west-2a"
+  availability_zone = "us-east-1a"
   tags = {
     Name = "private-subnet-1"
   }
@@ -44,7 +44,7 @@ resource "aws_subnet" "private_subnet1" {
 resource "aws_subnet" "private_subnet2" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.10.10.64/27"
-  availability_zone = "us-west-2b"
+  availability_zone = "us-east-2b"
   tags = {
     Name = "private-subnet-2"
   }
@@ -60,7 +60,6 @@ resource "aws_internet_gateway" "igw" {
 
 # Create an Elastic IP for the NAT Gateway
 resource "aws_eip" "nat" {
-  vpc = true
 }
 
 # Create a NAT Gateway
@@ -166,7 +165,7 @@ resource "aws_security_group" "alb_sg" {
 # Create VPC endpoints for SSM
 resource "aws_vpc_endpoint" "ssm" {
   vpc_id             = aws_vpc.main.id
-  service_name        = "com.amazonaws.${var.region}.ssm"
+  service_name        = "com.amazonaws.us-east-1.ssm"
   vpc_endpoint_type   = "Interface"
   security_group_ids  = [aws_security_group.ec2_sg.id]
   subnet_ids          = [aws_subnet.private_subnet1.id, aws_subnet.private_subnet2.id]
@@ -174,7 +173,7 @@ resource "aws_vpc_endpoint" "ssm" {
 
 resource "aws_vpc_endpoint" "ssm_messages" {
   vpc_id             = aws_vpc.main.id
-  service_name        = "com.amazonaws.${var.region}.ssmmessages"
+  service_name        = "com.amazonaws.us-east-1.ssmmessages"
   vpc_endpoint_type   = "Interface"
   security_group_ids  = [aws_security_group.ec2_sg.id]
   subnet_ids          = [aws_subnet.private_subnet1.id, aws_subnet.private_subnet2.id]
