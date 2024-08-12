@@ -31,7 +31,7 @@ resource "aws_security_group" "ec2_sg" {
   }
 
   tags = {
-    Name = "Demo_SG" 
+    Name = "Demo_ec2_SG" 
 }
 
 }
