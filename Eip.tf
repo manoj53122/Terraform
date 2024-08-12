@@ -1,6 +1,6 @@
-resource "aws_eip" "eip" {
+# resource "aws_eip" "eip" {
 
-  tags = {
-    Name = "Demo_EIP"
-  }
-}
+#   tags = {
+#     Name = "Demo_EIP"
+#   }
+# }
