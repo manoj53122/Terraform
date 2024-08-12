@@ -1,4 +1,5 @@
 resource "aws_security_group" "ec2_sg" {
+  name        = "Demo_tls"
   vpc_id = aws_vpc.main.id
 
   ingress {
