@@ -213,3 +213,21 @@ resource "aws_lb_listener" "http" {
     }
   }
 }
+
+resource "aws_instance" "private_ec2" {
+  ami           = "ami-0c55b159cbfafe1f0"  # Example Ubuntu AMI ID for us-west-2, adjust as needed
+  instance_type = "t2.micro"
+  subnet_id     = aws_subnet.private_subnet1.id
+  associate_public_ip_address = false
+
+  tags = {
+    Name = "private-ec2-instance"
+  }
+
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo apt update -y
+              sudo apt install -y python3 openjdk-8-jdk
+              EOF
+}
+
