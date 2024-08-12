@@ -1,8 +1,7 @@
 provider "aws" {
-  region = "us-east-1"  # Adjust region as necessary
+  region = "us-west-2"
 }
 
-# Create a VPC
 resource "aws_vpc" "main" {
   cidr_block = "10.10.10.0/24"
   tags = {
@@ -10,11 +9,10 @@ resource "aws_vpc" "main" {
   }
 }
 
-# Create public subnets
 resource "aws_subnet" "public_subnet1" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.10.10.0/25"
-  availability_zone = "us-east-1a"  # Adjust availability zone as necessary
+  availability_zone = "us-west-2a"
   map_public_ip_on_launch = true
   tags = {
     Name = "public-subnet-1"
@@ -24,18 +22,17 @@ resource "aws_subnet" "public_subnet1" {
 resource "aws_subnet" "public_subnet2" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.10.10.128/25"
-  availability_zone = "us-east-1b"  # Adjust availability zone as necessary
+  availability_zone = "us-west-2b"
   map_public_ip_on_launch = true
   tags = {
     Name = "public-subnet-2"
   }
 }
 
-# Create private subnets
 resource "aws_subnet" "private_subnet1" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.10.10.32/27"
-  availability_zone = "us-east-1a"
+  availability_zone = "us-west-2a"
   tags = {
     Name = "private-subnet-1"
   }
@@ -44,11 +41,12 @@ resource "aws_subnet" "private_subnet1" {
 resource "aws_subnet" "private_subnet2" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.10.10.64/27"
-  availability_zone = "us-east-2b"
+  availability_zone = "us-west-2b"
   tags = {
     Name = "private-subnet-2"
   }
 }
+
 
 # Create an Internet Gateway
 resource "aws_internet_gateway" "igw" {
